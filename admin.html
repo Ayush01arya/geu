@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Container styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        /* Header styling */
+        header {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Button styling */
+        .btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .btn-edit {
+            background-color: #28a745;
+            margin-right: 5px;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 768px) {
+            table, th, td {
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            header {
+                font-size: 1.5em;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            table, th, td {
+                font-size: 10px;
+            }
+
+            .btn {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>Registered Users</header>
+        <table id="users-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Gender</th>
+                    <th>Occupation</th>
+                    <th>Nationality</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="users-tbody">
+                <!-- User data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch user details from the backend
+        fetch('http://127.0.0.1:5000/users')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(users => {
+                const tbody = document.getElementById('users-tbody');
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.full_name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.mobile_number}</td>
+                        <td>${user.gender}</td>
+                        <td>${user.occupation}</td>
+                        <td>${user.nationality}</td>
+                        <td>
+                            <button class="btn btn-edit" onclick="editUser(${user.id})">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteUser(${user.id})">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching users:', error);
+            });
+
+        // Edit user function (needs backend endpoint)
+        function editUser(userId) {
+            // Placeholder for edit function
+            alert(`Edit user with ID: ${userId}`);
+            // Add further implementation as per your backend API for editing
+        }
+
+        // Delete user function (needs backend endpoint)
+        function deleteUser(userId) {
+    fetch(`http://127.0.0.1:5000/users/${userId}`, {  // Add full URL
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert(data.message);  // Show success message
+        location.reload();     // Refresh page to update user list
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+    </script>
+</body>
+</html>

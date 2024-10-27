@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - User Details</title>
+</head>
+<body>
+    <h2>Registered Users</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Date of Birth</th>
+            <th>Email</th>
+            <th>Mobile Number</th>
+            <th>Gender</th>
+            <th>Occupation</th>
+            <th>Address Type</th>
+            <!-- Add other fields as necessary -->
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.dob }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.mobile_number }}</td>
+            <td>{{ user.gender }}</td>
+            <td>{{ user.occupation }}</td>
+            <td>{{ user.address_type }}</td>
+            <!-- Display other fields as necessary -->
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
