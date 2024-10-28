@@ -40,6 +40,10 @@ class User(db.Model):
 
 with app.app_context():
     db.create_all()
+@app.route("/")
+def start():
+    return "<h1><b><center>Made by Ayush Arya </center></b></h1>"
+
 
 @app.route('/register', methods=['POST'])
 def register_user():
